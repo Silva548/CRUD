@@ -1,40 +1,35 @@
-<h1>Lista de usuários</h1>
+h1 Lista de usuários
 
-<form id="searchForm" method="GET" action="/users">
-    <div class="form-group">
-        <label for="search">Buscar Usuário:</label>
-        <input type="text" id="search" name="search" class="form-control" placeholder="Digite o nome do usuário" autocomplete="off">
-    </div>
-</form>
+form#searchForm(method="GET" action="/users")
+    .form-group
+        label(for="search") Buscar Usuário:
+        input#search.form-control(
+            type="text"
+            name="search"
+            placeholder="Digite o nome do usuário"
+            autocomplete="off"
+        )
 
-<table class="table">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Nome</th>
-            <th>Regra</th>
-            <th>Ação</th>
-        </tr>
-    </thead>
-    <tbody id="userTableBody">
-        <% users.forEach(user => { %>
-            <tr>
-                <td><%= user.id %></td>
-                <td><%= user.username %></td>
-                <td><%= user.role %></td>
-                <td>
-                    <a href="/users/<%= user.id %>" class="btn btn-primary">View</a>
-                    <a href="/users/<%= user.id %>/edit" class="btn btn-warning">Edit</a>
-                    <form action="/users/<%= user.id %>?_method=DELETE" method="POST" style="display: inline;">
-                        <button type="submit" class="btn btn-danger">Delete</button>
-                    </form>
-                </td>
-            </tr>
-        <% }) %>
-    </tbody>
-</table>
+table.table
+    thead
+        tr
+            th ID
+            th Nome
+            th Regra
+            th Ação
+    tbody#userTableBody
+        each user in users
+            tr
+                td= user.id
+                td= user.username
+                td= user.role
+                td
+                    a.btn.btn-primary(href=`/users/${user.id}`) View
+                    a.btn.btn-warning(href=`/users/${user.id}/edit`) Edit
+                    form(method="POST" action=`/users/${user.id}?_method=DELETE` style="display: inline;")
+                        button.btn.btn-danger(type="submit") Delete
 
-<script>
+script.
     document.getElementById('search').addEventListener('input', function() {
         const searchValue = this.value;
 
@@ -63,4 +58,4 @@
             })
             .catch(error => console.error('Error:', error));
     });
-</script>
+
